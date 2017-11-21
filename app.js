@@ -67,12 +67,17 @@ readFiles('sessions/', function(filename, content) {
       list.push(event.view_controller);
     }
     if (i >= events.length) {
-      models.sessions.create({
-        length: length,
-        controller: list.toString(),
-        fromDate: starttime,
-        toDate: endtime
-      })
+      for ( var j=1;j <= list.length ; j++ ) {
+        for ( var k=0; k <= (list.length - j); k++) {
+          var nlist = list.slice(k, k+j);
+          models.sessions.create({
+            length: j,
+            controller: nlist.toString(),
+            fromDate: starttime,
+            toDate: endtime
+          })
+        }
+      }
       return;
     }
     next();
